@@ -2,7 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#08221c">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Daily Quest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
 <title>Daily Survival Quest</title>
 <style>
   :root{
@@ -19,7 +27,9 @@
   }
   .hide{display:none !important}
 
-  #app{height:100vh;display:flex;flex-direction:column;padding:18px 22px 20px;
+  #app{height:100vh;height:100dvh;display:flex;flex-direction:column;
+    padding:calc(18px + env(safe-area-inset-top)) calc(22px + env(safe-area-inset-right))
+            calc(20px + env(safe-area-inset-bottom)) calc(22px + env(safe-area-inset-left));
     transition:filter .9s ease, transform .9s ease}
   #app.veiled{filter:blur(16px) saturate(.7);transform:scale(1.04);pointer-events:none}
 
@@ -316,6 +326,100 @@
   .err{color:#fca5a5;font-size:12px;margin-top:10px;text-align:center;min-height:16px}
   .danger{border-color:rgba(239,68,68,.4);color:#f87171}
   .danger:hover{background:rgba(239,68,68,.16);box-shadow:none}
+
+  /* ================= touch + mobile ================= */
+  html{-webkit-text-size-adjust:100%}
+  button,label.chk,.cell,.dcard,.pip,.seg{-webkit-tap-highlight-color:transparent;
+    touch-action:manipulation}
+  input[type=text]{font-size:16px}          /* stops iOS zooming on focus */
+  /* only apply lift/slide effects where a real pointer exists */
+  @media (hover:none){
+    .cell.open:hover,.dcard:hover{transform:none}
+    label.chk:hover{transform:none;background:none}
+  }
+
+  @media (max-width:820px){
+    #app{padding:calc(12px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom))}
+    h1{font-size:16px;line-height:1.3}
+    .sub{font-size:10.5px}
+    .topbar{align-items:flex-start;gap:10px}
+    .mstat{width:100%;gap:6px}
+    .st{min-width:0;flex:1;padding:6px 8px}
+    .st .k{font-size:8px;letter-spacing:.12em}
+    .st .v{font-size:15px}
+    .gear{width:40px;height:40px}
+    .monrow{margin:11px 0 8px}
+    .mon{font-size:14px}
+    .navbtns{gap:5px}
+    .navbtns button{padding:7px 10px;font-size:10px}
+    .wk{gap:4px}
+    .wk div{font-size:8.5px;letter-spacing:.08em}
+    .grid{gap:4px}
+    .cell{border-radius:8px;gap:3px;padding:3px}
+    .cell .n{font-size:13px}
+    .cell.open .n{font-size:16px}
+    .gate{display:none}
+    .mini{width:76%;height:3px}
+
+    .ov{padding:0}
+    .modal,.gatebox{max-width:100%;border-radius:0;min-height:100dvh;margin:0;
+      padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+    .gatebox{display:flex;flex-direction:column;justify-content:center;padding-left:22px;padding-right:22px}
+    .mh{position:sticky;top:0;z-index:5;background:var(--panel)}
+    .mh h2{font-size:15px}
+    .stats{padding:11px 14px 3px}
+    .barwrap{padding:10px 14px 12px}
+    .stage{padding:12px 14px 14px;min-height:0;flex:1}
+    .mf{padding:12px 14px calc(12px + env(safe-area-inset-bottom))}
+    label.chk{font-size:14.5px;padding:11px 9px}     /* bigger tap targets */
+    input[type=checkbox]{width:22px;height:22px}
+    input[type=checkbox]:checked::after{left:7px;top:2.5px;width:6px;height:12px}
+    .arrow{width:42px;height:42px;font-size:17px}
+    .qt{font-size:13px}
+    .pip{width:11px;height:11px}
+    .gbtns button{flex:1;min-width:120px}
+
+    #setup,#select{padding:calc(20px + env(safe-area-inset-top)) 13px
+                   calc(50px + env(safe-area-inset-bottom))}
+    .card{padding:13px 12px}
+    .shead h2{font-size:19px}
+    /* editor rows stack instead of squeezing */
+    .qrow{flex-wrap:wrap}
+    .qrow .grow{flex:1 1 100%;order:3}
+    .irow{flex-wrap:wrap;gap:6px;padding-bottom:9px;
+      border-bottom:1px solid rgba(255,255,255,.05);margin-bottom:9px}
+    .irow .grow{flex:1 1 100%;order:-1}
+    .mini-btn{width:38px;height:36px}
+    .sfoot{flex-direction:column-reverse;gap:9px}
+    .sfoot>div{display:flex;gap:8px;flex-wrap:wrap}
+    .sfoot button{flex:1;min-width:130px}
+    .primary{width:100%}
+
+    .stbar{padding:11px 13px;gap:8px}
+    .charts{padding:13px;max-height:none}
+    .blab{width:52%;font-size:11.5px}
+    .bval{width:62px;font-size:10.5px}
+    .dayrow{height:118px}
+    .dcard{padding:13px;gap:11px}
+    .dcrest{font-size:25px;width:36px}
+    .dname{font-size:14.5px}
+    .dtag{font-size:10.5px}
+    .dstats{font-size:9px;gap:9px}
+  }
+
+  @media (max-width:400px){
+    .cell .n{font-size:11.5px}
+    .blab{width:58%}
+    .st .v{font-size:14px}
+  }
+
+  /* landscape phone: keep the grid from overflowing */
+  @media (max-height:520px) and (orientation:landscape){
+    .topbar{flex-wrap:nowrap}
+    h1{font-size:14px}
+    .sub{display:none}
+    .grid{gap:3px}
+  }
 </style>
 </head>
 <body>
@@ -370,6 +474,8 @@
   <div class="rule"></div>
   <div class="tagline" id="landTag"></div>
   <button class="enter" data-nosnd onclick="enter()">Enter the Gate</button>
+  <button class="seg hide" id="installBtn" data-nosnd onclick="installApp()"
+          style="margin-top:18px;padding:9px 18px">&#11015; Install to Home Screen</button>
   <div class="stamp" id="stamp"></div>
 </div>
 
@@ -458,6 +564,10 @@
 
     <div class="sfoot">
       <div style="display:flex;gap:9px;flex-wrap:wrap">
+        <button data-nosnd onclick="exportData()">&#11015; Export</button>
+        <button data-nosnd onclick="document.getElementById('importFile').click()">&#11014; Import</button>
+        <input type="file" id="importFile" accept=".json,application/json"
+               style="display:none" onchange="importPicked(this)">
         <button id="newDungBtn" data-nosnd onclick="newDungeonFromSetup()">+ New Dungeon</button>
         <button class="danger" id="delDungeon" data-nosnd onclick="deleteDungeon()">Delete This Dungeon</button>
         <button class="danger" data-nosnd onclick="wipe()">Erase Everything</button>
@@ -560,6 +670,7 @@
     <p id="confMsg"></p>
     <div class="gbtns">
       <button class="deny" onclick="confNo()">Cancel</button>
+      <button class="allow hide" id="confAlt"></button>
       <button class="allow" id="confYes">Confirm</button>
     </div>
   </div>
@@ -865,6 +976,25 @@ function doneCount(k){
   return n;
 }
 
+/* ---- PWA: offline cache + install prompt ---- */
+if("serviceWorker" in navigator && location.protocol.indexOf("http")===0){
+  window.addEventListener("load",function(){
+    navigator.serviceWorker.register("sw.js").catch(function(){});
+  });
+}
+var deferredInstall=null;
+window.addEventListener("beforeinstallprompt",function(e){
+  e.preventDefault(); deferredInstall=e;
+  var b=document.getElementById("installBtn"); if(b) b.classList.remove("hide");
+});
+function installApp(){
+  var b=document.getElementById("installBtn");
+  if(!deferredInstall){ if(b) b.classList.add("hide"); return; }
+  deferredInstall.prompt();
+  deferredInstall.userChoice.then(function(){ deferredInstall=null;
+    if(b) b.classList.add("hide"); });
+}
+
 /* ================= boot ================= */
 (function boot(){
   migrate();
@@ -877,7 +1007,94 @@ function doneCount(k){
   else { showSelect(); }
 })();
 
-/* ---- dungeon select ---- */
+
+/* ================= export / import ================= */
+function exportData(){
+  var payload={
+    app:"daily-survival-quest", version:1,
+    exported:new Date().toISOString(),
+    dungeons:DUNGEONS,
+    days:readDays(),
+    accept:readAccept()
+  };
+  var txt=JSON.stringify(payload,null,1);
+  var name="daily-quest-backup-"+TODAY+".json";
+  try{
+    var blob=new Blob([txt],{type:"application/json"});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement("a");
+    a.href=url; a.download=name; document.body.appendChild(a); a.click();
+    setTimeout(function(){URL.revokeObjectURL(url);a.remove()},1500);
+    var n=0; Object.keys(payload.days).forEach(function(d){
+      n+=Object.keys(payload.days[d]).length});
+    toast("\u2B07\uFE0F Saved "+DUNGEONS.length+" dungeon"+(DUNGEONS.length===1?"":"s")+
+          " and "+n+" day"+(n===1?"":"s")+".");
+  }catch(e){ flash("Export failed on this browser."); }
+}
+
+function importPicked(input){
+  var f=input.files&&input.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(){
+    input.value="";                       // let the same file be picked again
+    var data;
+    try{ data=JSON.parse(r.result); }catch(e){ flash("That file isn't valid JSON."); return; }
+    if(!data||!data.dungeons||!data.dungeons.length){
+      flash("No dungeons found in that file."); return;
+    }
+    var dd=data.days||{}, nDays=0;
+    Object.keys(dd).forEach(function(k){nDays+=Object.keys(dd[k]).length});
+    askConfirm("Import backup",
+      "This file holds "+data.dungeons.length+" dungeon"+(data.dungeons.length===1?"":"s")+
+      " and "+nDays+" recorded day"+(nDays===1?"":"s")+
+      ". Merge keeps what you already have and adds anything missing. Replace wipes this device first.",
+      function(){ applyImport(data,true) },  "Merge",
+      "Replace",
+      function(){ applyImport(data,false) });
+  };
+  r.onerror=function(){ flash("Couldn't read that file."); };
+  r.readAsText(f);
+}
+
+function applyImport(data,merge){
+  var days=readDays(), acc=readAccept();
+  if(!merge){ DUNGEONS=[]; days={}; acc={}; }
+
+  data.dungeons.forEach(function(inc){
+    if(!inc.id) inc.id="d"+Math.random().toString(36).slice(2,10);
+    fillOpts(fillGate(inc));
+    var mine=dungeonById(inc.id);
+    if(!mine) DUNGEONS.push(inc);          // merge: keep the local config if it exists
+  });
+
+  var incDays=data.days||{};
+  Object.keys(incDays).forEach(function(did){
+    if(!days[did]) days[did]={};
+    Object.keys(incDays[did]).forEach(function(date){
+      var mineDay=days[did][date]||{}, theirs=incDays[did][date]||{};
+      if(merge){
+        Object.keys(theirs).forEach(function(id){ if(theirs[id]) mineDay[id]=true });
+        days[did][date]=mineDay;           // union -- a tick on either device counts
+      } else days[did][date]=theirs;
+    });
+  });
+
+  var incAcc=data.accept||{};
+  Object.keys(incAcc).forEach(function(did){ if(!acc[did]) acc[did]=incAcc[did] });
+
+  writeDays(days); LS("dsq_accept",JSON.stringify(acc));
+  DID=DUNGEONS.length?(dungeonById(DID)?DID:DUNGEONS[0].id):null;
+  saveVault();
+
+  document.getElementById("setup").classList.add("hide");
+  makingNew=false; firstRun=false;
+  if(!DUNGEONS.length){ CFG=null; openSetup(true); return; }
+  if(DUNGEONS.length===1) enterDungeon(DUNGEONS[0].id); else showSelect();
+  toast((merge?"\u2B06\uFE0F Merged":"\u2B06\uFE0F Replaced")+" \u2014 "+
+        DUNGEONS.length+" dungeon"+(DUNGEONS.length===1?"":"s")+" loaded.");
+}
+
+/* ================= dungeon select ================= */
 function showSelect(){
   document.getElementById("landing").classList.add("hide");
   document.getElementById("setup").classList.add("hide");
@@ -979,7 +1196,7 @@ function openSetup(isFirst,isNew){
   draft = (CFG && !makingNew) ? clone(CFG)
     : {id:"d"+Date.now().toString(36)+Math.random().toString(36).slice(2,5),
        name:"",crest:"\u2694\uFE0F",theme:"emerald",tagline:"",
-       quests:[{icon:"\u2728",title:"",sub:"",items:[{id:uid(),icon:"\u2705",text:"",from:TODAY}]}]};
+       quests:[{icon:"\u2728",title:"",sub:"",items:[{id:uid(),icon:"",text:"",from:TODAY}]}]};
   if(!draft.id) draft.id="d"+Date.now().toString(36);
   fillGate(draft); fillOpts(draft);
   ensureIds(draft);
@@ -1074,20 +1291,14 @@ function renderEditor(){
            'oninput="setQ('+i+',\'icon\',this.value)">'+
          '<input type="text" class="grow" placeholder="Quest title" value="'+esc(q.title)+'" '+
            'oninput="setQ('+i+',\'title\',this.value)">'+
-         '<button class="mini-btn" onclick="moveQ('+i+',-1)" title="Move up">&#9650;</button>'+
-         '<button class="mini-btn" onclick="moveQ('+i+',1)" title="Move down">&#9660;</button>'+
          '<button class="mini-btn del" onclick="delQ('+i+')" title="Delete quest">&#10005;</button>'+
        '</div>'+
        '<div class="qrow"><input type="text" class="grow" placeholder="One-line reminder (optional)" '+
          'value="'+esc(q.sub)+'" oninput="setQ('+i+',\'sub\',this.value)"></div>';
     visItems(q).forEach(function(it,j){
       h+='<div class="irow">'+
-         '<input type="text" class="emo" maxlength="4" value="'+esc(it.icon)+'" '+
-           'oninput="setI('+i+','+j+',\'icon\',this.value)">'+
          '<input type="text" class="grow" placeholder="What do you want to be asked?" '+
            'value="'+esc(it.text)+'" oninput="setI('+i+','+j+',\'text\',this.value)">'+
-         '<button class="mini-btn" onclick="moveI('+i+','+j+',-1)">&#9650;</button>'+
-         '<button class="mini-btn" onclick="moveI('+i+','+j+',1)">&#9660;</button>'+
          '<button class="mini-btn del" onclick="delI('+i+','+j+')">&#10005;</button>'+
          '</div>';
     });
@@ -1098,7 +1309,7 @@ function renderEditor(){
 function setQ(i,f,v){draft.quests[i][f]=v}
 function setI(i,j,f,v){visItems(draft.quests[i])[j][f]=v}
 function addQuest(){draft.quests.push({icon:"\u2728",title:"",sub:"",
-  items:[{id:uid(),icon:"\u2705",text:"",from:TODAY}]});renderEditor()}
+  items:[{id:uid(),icon:"",text:"",from:TODAY}]});renderEditor()}
 function delQ(i){
   if(visQuests().length<=1){flash("Keep at least one quest.");return}
   var q=draft.quests[i], fresh=q.items.every(function(it){return it.from===TODAY});
@@ -1106,11 +1317,7 @@ function delQ(i){
   else q.items.forEach(function(it){ if(it.from===TODAY) it.dead=true; else it.until=YEST; });
   renderEditor();
 }
-function moveQ(i,d){
-  var t=i+d; if(t<0||t>=draft.quests.length) return;
-  var a=draft.quests.splice(i,1)[0]; draft.quests.splice(t,0,a); renderEditor();
-}
-function addItem(i){draft.quests[i].items.push({id:uid(),icon:"\u2705",text:"",from:TODAY});renderEditor()}
+function addItem(i){draft.quests[i].items.push({id:uid(),icon:"",text:"",from:TODAY});renderEditor()}
 function delI(i,j){
   var live=visItems(draft.quests[i]);
   if(live.length<=1){flash("A quest needs at least one task.");return}
@@ -1119,12 +1326,6 @@ function delI(i,j){
     draft.quests[i].items.splice(draft.quests[i].items.indexOf(it),1);
   } else { it.until=YEST; }
   renderEditor();
-}
-function moveI(i,j,d){
-  var live=visItems(draft.quests[i]), t=j+d; if(t<0||t>=live.length) return;
-  var arr=draft.quests[i].items;
-  var ia=arr.indexOf(live[j]), ib=arr.indexOf(live[t]);
-  var tmp=arr[ia]; arr[ia]=arr[ib]; arr[ib]=tmp; renderEditor();
 }
 function flash(m){document.getElementById("setupErr").textContent=m;
   setTimeout(function(){document.getElementById("setupErr").textContent=""},2600)}
@@ -1152,7 +1353,7 @@ function saveCfg(){
     if(items.length===0) return;
     clean.push({icon:(q.icon||"").trim()||"\u2728",title:(q.title||"").trim()||"Untitled Quest",
       sub:(q.sub||"").trim(),items:items.map(function(it){
-        var o={id:it.id||uid(),icon:(it.icon||"").trim()||"\u2705",text:(it.text||"").trim(),
+        var o={id:it.id||uid(),icon:(it.icon||"").trim(),text:(it.text||"").trim(),
                from:it.from||TODAY};
         if(it.until) o.until=it.until;
         return o;
@@ -1190,11 +1391,16 @@ function deleteDungeon(){
     });
 }
 
-function askConfirm(title,msg,onYes){
+function askConfirm(title,msg,onYes,yesLabel,altLabel,onAlt){
   document.getElementById("confTitle").textContent=title;
   document.getElementById("confMsg").textContent=msg;
-  var y=document.getElementById("confYes");
+  var y=document.getElementById("confYes"), a=document.getElementById("confAlt");
+  y.textContent=yesLabel||"Confirm";
   y.onclick=function(){document.getElementById("confirmOv").classList.remove("on");onYes()};
+  if(altLabel){
+    a.textContent=altLabel; a.classList.remove("hide");
+    a.onclick=function(){document.getElementById("confirmOv").classList.remove("on");onAlt()};
+  } else a.classList.add("hide");
   document.getElementById("confirmOv").classList.add("on");
   sfx("warn");
 }
@@ -1431,8 +1637,9 @@ function paint(dir){
     var lock = CFG.opts.lockAnswers && state[it.id];
     h+='<label class="chk'+(lock?" sealed":"")+'"'+(lock?' title="Answer locked"':'')+
        '><input type="checkbox"'+(state[it.id]?" checked":"")+(lock?" disabled":"")+
-       ' onchange="toggle(\''+it.id+'\',this.checked)"><span class="ic">'+esc(it.icon)+
-       '</span><span class="tx">'+esc(it.text)+'</span></label>';
+       ' onchange="toggle(\''+it.id+'\',this.checked)">'+
+       (it.icon?'<span class="ic">'+esc(it.icon)+'</span>':'')+
+       '<span class="tx">'+esc(it.text)+'</span></label>';
   });
   box.innerHTML=h;
   if(dir){box.style.setProperty("--dir",dir>0?"22px":"-22px");
