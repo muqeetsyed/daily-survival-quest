@@ -306,6 +306,8 @@
     background:rgba(255,255,255,.04);color:#cbd5e1;display:flex;align-items:center;gap:8px}
   .th b{width:13px;height:13px;border-radius:50%;display:inline-block}
   .th.sel{border-color:var(--acc);color:#fff;box-shadow:0 0 14px color-mix(in srgb,var(--acc) 30%,transparent)}
+  .th svg{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;
+    stroke-linecap:round;stroke-linejoin:round}
 
   .qcard{border:1px solid color-mix(in srgb,var(--acc) 20%,transparent);border-radius:11px;
     background:rgba(0,0,0,.16);padding:14px;margin-bottom:12px}
@@ -383,13 +385,14 @@
                    calc(50px + env(safe-area-inset-bottom))}
     .card{padding:13px 12px}
     .shead h2{font-size:19px}
-    /* editor rows stack instead of squeezing */
-    .qrow{flex-wrap:wrap}
-    .qrow .grow{flex:1 1 100%;order:3}
-    .irow{flex-wrap:wrap;gap:6px;padding-bottom:9px;
-      border-bottom:1px solid rgba(255,255,255,.05);margin-bottom:9px}
-    .irow .grow{flex:1 1 100%;order:-1}
-    .mini-btn{width:38px;height:36px}
+    /* editor rows: field takes the space, delete sits beside it */
+    .qrow{flex-wrap:nowrap;gap:7px}
+    .qrow .grow{flex:1 1 auto;min-width:0;order:0}
+    .irow{flex-wrap:nowrap;gap:7px;margin-bottom:8px}
+    .irow .grow{flex:1 1 auto;min-width:0;order:0}
+    .mini-btn{width:42px;height:44px;font-size:15px}
+    input.emo{width:48px;flex:none}
+    .card input[type=text]{padding:11px 12px}
     .sfoot{flex-direction:column-reverse;gap:9px}
     .sfoot>div{display:flex;gap:8px;flex-wrap:wrap}
     .sfoot button{flex:1;min-width:130px}
@@ -683,6 +686,19 @@
 var MONTHS=["January","February","March","April","May","June","July",
             "August","September","October","November","December"];
 var DAYNM=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+var ICO={
+ snd:'<svg viewBox="0 0 24 24"><path d="M4 9.5h3.2L11.5 6v12L7.2 14.5H4z"/>'+
+     '<path d="M15.5 9.2a4 4 0 0 1 0 5.6"/><path d="M18 6.8a7.5 7.5 0 0 1 0 10.4"/></svg>',
+ mute:'<svg viewBox="0 0 24 24"><path d="M4 9.5h3.2L11.5 6v12L7.2 14.5H4z"/>'+
+      '<path d="M16 9.5l5 5"/><path d="M21 9.5l-5 5"/></svg>',
+ lock:'<svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="9.5" rx="2.2"/>'+
+      '<path d="M8.2 10.5V7.8a3.8 3.8 0 0 1 7.6 0v2.7"/></svg>',
+ open:'<svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="9.5" rx="2.2"/>'+
+      '<path d="M8.2 10.5V7.8a3.8 3.8 0 0 1 7.3-1.1"/></svg>',
+ edit:'<svg viewBox="0 0 24 24"><path d="M4 20l4.2-1.1L19 8.1a2 2 0 0 0 0-2.8l-.3-.3a2 2 0 0 0-2.8 0'+
+      'L5.1 15.8z"/><path d="M14.8 6.6l2.6 2.6"/></svg>'
+};
+
 var RANKS=[[0,"E"],[25,"D"],[45,"C"],[65,"B"],[85,"A"],[100,"S"]];
 
 var THEMES={
@@ -1242,9 +1258,9 @@ function cancelSetup(){
 
 function paintOpts(){
   var rows=[
-    ["optSound","sound",[[true,"\uD83D\uDD0A On"],[false,"\uD83D\uDD07 Off"]]],
-    ["optPast","pastOpen",[[false,"\uD83D\uDD12 Sealed"],[true,"\uD83D\uDD13 Open"]]],
-    ["optLock","lockAnswers",[[false,"\u270F\uFE0F Editable"],[true,"\uD83D\uDD12 Locked once ticked"]]]
+    ["optSound","sound",[[true,ICO.snd+"On"],[false,ICO.mute+"Off"]]],
+    ["optPast","pastOpen",[[false,ICO.lock+"Sealed"],[true,ICO.open+"Open"]]],
+    ["optLock","lockAnswers",[[false,ICO.edit+"Editable"],[true,ICO.lock+"Locked once ticked"]]]
   ];
   rows.forEach(function(r){
     var h="";
