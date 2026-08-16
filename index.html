@@ -313,9 +313,14 @@
     background:rgba(0,0,0,.16);padding:14px;margin-bottom:12px}
   .qrow{display:flex;gap:8px;align-items:center;margin-bottom:9px;flex-wrap:nowrap}
   .qrow .grow{flex:1;min-width:0}
-  .mini-btn{width:30px;height:34px;padding:0;font-size:13px;flex:none;border-radius:7px}
-  .del{border-color:rgba(239,68,68,.35);color:#f87171}
-  .del:hover{background:rgba(239,68,68,.18);box-shadow:none}
+  .mini-btn{width:32px;height:36px;padding:0;flex:none;border-radius:8px;
+    display:flex;align-items:center;justify-content:center}
+  .mini-btn svg,.x svg{width:15px;height:15px;display:block;fill:none;stroke:currentColor;
+    stroke-width:1.8;stroke-linecap:round}
+  .x svg{width:14px;height:14px}
+  .del{border-color:transparent;background:transparent;color:#8a9aa8;opacity:.75}
+  .del:hover{background:rgba(239,68,68,.14);color:#fca5a5;opacity:1;box-shadow:none}
+  .del:active{background:rgba(239,68,68,.22);color:#fca5a5;opacity:1}
   .irow{display:flex;gap:8px;align-items:center;margin-bottom:7px}
   .qnum{font-size:9.5px;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;
     margin-bottom:8px}
@@ -390,7 +395,8 @@
     .qrow .grow{flex:1 1 auto;min-width:0;order:0}
     .irow{flex-wrap:nowrap;gap:7px;margin-bottom:8px}
     .irow .grow{flex:1 1 auto;min-width:0;order:0}
-    .mini-btn{width:42px;height:44px;font-size:15px}
+    .mini-btn{width:44px;height:46px}
+    .mini-btn svg{width:17px;height:17px}
     input.emo{width:48px;flex:none}
     .card input[type=text]{padding:11px 12px}
     .sfoot{flex-direction:column-reverse;gap:9px}
@@ -607,7 +613,7 @@
         <div class="tag"><span class="dot"></span>Daily Quest</div>
         <h2 id="mTitle"></h2>
       </div>
-      <button class="x" data-nosnd onclick="closeDay()">&#10005;</button>
+      <button class="x" data-nosnd onclick="closeDay()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.8 6.8l10.4 10.4"/><path d="M17.2 6.8L6.8 17.2"/></svg></button>
     </div>
     <div class="stats">
       <div class="st"><div class="k">Rank</div><div class="v" id="rank">E</div></div>
@@ -654,7 +660,7 @@
         <div class="tag"><span class="dot"></span>Records</div>
         <h2>Progress Charts</h2>
       </div>
-      <button class="x" data-nosnd onclick="closeStats()">&#10005;</button>
+      <button class="x" data-nosnd onclick="closeStats()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.8 6.8l10.4 10.4"/><path d="M17.2 6.8L6.8 17.2"/></svg></button>
     </div>
     <div class="stbar">
       <div class="segs" id="tabRow"></div>
@@ -1307,7 +1313,7 @@ function renderEditor(){
            'oninput="setQ('+i+',\'icon\',this.value)">'+
          '<input type="text" class="grow" placeholder="Quest title" value="'+esc(q.title)+'" '+
            'oninput="setQ('+i+',\'title\',this.value)">'+
-         '<button class="mini-btn del" onclick="delQ('+i+')" title="Delete quest">&#10005;</button>'+
+         '<button class="mini-btn del" onclick="delQ('+i+')" title="Delete quest"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.8 6.8l10.4 10.4"/><path d="M17.2 6.8L6.8 17.2"/></svg></button>'+
        '</div>'+
        '<div class="qrow"><input type="text" class="grow" placeholder="One-line reminder (optional)" '+
          'value="'+esc(q.sub)+'" oninput="setQ('+i+',\'sub\',this.value)"></div>';
@@ -1315,7 +1321,7 @@ function renderEditor(){
       h+='<div class="irow">'+
          '<input type="text" class="grow" placeholder="What do you want to be asked?" '+
            'value="'+esc(it.text)+'" oninput="setI('+i+','+j+',\'text\',this.value)">'+
-         '<button class="mini-btn del" onclick="delI('+i+','+j+')">&#10005;</button>'+
+         '<button class="mini-btn del" onclick="delI('+i+','+j+')" title="Delete task"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.8 6.8l10.4 10.4"/><path d="M17.2 6.8L6.8 17.2"/></svg></button>'+
          '</div>';
     });
     h+='<button class="addbtn" onclick="addItem('+i+')">+ Add Task</button></div>';
